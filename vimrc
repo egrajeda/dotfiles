@@ -13,6 +13,7 @@ Bundle 'gmarik/vundle'
 Bundle 'git://git.wincent.com/command-t.git'
 Bundle 'hallison/vim-markdown'
 Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/powerline'
 
 filetype plugin indent on
 
@@ -90,3 +91,6 @@ hi ExtraWhitespace ctermbg=1
 au! BufWinEnter * match ExtraWhitespace /\s\+$/
 au! BufEnter * match ExtraWhitespace /\s\+$/
 au! WinEnter * match ExtraWhitespace /\s\+$/
+
+" Activando powerline
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
