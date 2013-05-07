@@ -1,0 +1,1 @@
+set wildignore+=app/templates_c/**,eocene/templates_c/**,symfony/vendor/**,symfony/app/cache/**,symfony/app/logs/**

@@ -94,3 +94,7 @@ au! WinEnter * match ExtraWhitespace /\s\+$/
 
 " Activando powerline
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+
+" Habilitar la configuración por proyecto
+set exrc
+set secure
