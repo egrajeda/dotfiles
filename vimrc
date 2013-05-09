@@ -14,6 +14,7 @@ Bundle 'git://git.wincent.com/command-t.git'
 Bundle 'hallison/vim-markdown'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/powerline'
+Bundle 'tyru/current-func-info.vim'
 
 filetype plugin indent on
 
