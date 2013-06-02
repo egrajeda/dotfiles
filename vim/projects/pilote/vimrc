@@ -1,4 +1,4 @@
-set wildignore+=app/templates_c/**,src/Techo/LegacyBundle/Resources/eocene/templates_c/**,src/Techo/LegacyBundle/Resources/eocene/log/**,vendor/**,app/cache/**,app/logs/**
+set wildignore+=app/templates_c/**,src/Techo/LegacyBundle/Resources/eocene/templates_c/**,src/Techo/LegacyBundle/Resources/eocene/log/**,vendor/**,app/cache/**,app/logs/**,web/bundles/**
 
 " Mappings para ejecutar las pruebas de todo el archivo o únicamente aquella
 " sobre la cual está el cursor
