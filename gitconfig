@@ -1,3 +1,5 @@
+[include]
+    path = .gitconfig.private
 [alias]
     st = status
     ci = commit

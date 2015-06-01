@@ -1,5 +1,0 @@
-[include]
-    path = /path_to_dotfiles/git/gitconfig_base
-[user]
-    name  =
-    email =
