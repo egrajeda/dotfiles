@@ -7,15 +7,16 @@ set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call vundle#begin()
 
-Bundle 'gmarik/vundle'
-Bundle 'git://git.wincent.com/command-t.git'
-Bundle 'hallison/vim-markdown'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/powerline'
-Bundle 'tyru/current-func-info.vim'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'hallison/vim-markdown'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Lokaltog/powerline'
+Plugin 'tyru/current-func-info.vim'
 
+call vundle#end()
 filetype plugin indent on
 
 " Me gusta usar espacios, no tabulación
