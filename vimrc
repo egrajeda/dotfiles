@@ -87,7 +87,7 @@ iab tihs this
 nm ñoc :exe "e! " . substitute(expand("%:r"), "templates", "commands", "") . ".php"<cr>
 nm ñot :exe "e! " . substitute(expand("%:r"), "commands", "templates", "") . ".tpl"<cr>
 
-hi NonText ctermfg=235
+hi NonText ctermfg=7
 
 hi ExtraWhitespace ctermbg=1
 au! BufWinEnter * match ExtraWhitespace /\s\+$/
