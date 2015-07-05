@@ -15,6 +15,8 @@ Plugin 'hallison/vim-markdown'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/powerline'
 Plugin 'tyru/current-func-info.vim'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
 
 call vundle#end()
 filetype plugin indent on
@@ -100,3 +102,6 @@ set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 " Habilitar la configuración por proyecto
 set exrc
 set secure
+
+nm <leader>nt :exe 'Note ' . strftime('%Y-%m-%d')<CR>
+nm <leader>nw :exe 'Note ' . strftime('%Y-W%U')<CR>
