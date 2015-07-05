@@ -64,8 +64,8 @@ set list
 " Es más conveniente para no tener que estar apretando Shift
 nm , :
 
-" El mapleader es ñ
-let mapleader = "ñ"
+" El mapleader es ;
+let mapleader = ";"
 
 hi phpSyntaxError ctermbg=1 ctermfg=255
 fun! CheckPHPSyntax()
