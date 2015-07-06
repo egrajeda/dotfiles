@@ -18,3 +18,5 @@ vim +PluginInstall +qall
 if [ -n "$ARCHLINUX" ]; then
     localectl --no-convert set-x11-keymap us pc104 altgr-intl ctrl:nocaps
 fi
+
+ln -s $DOTFILES/dircolors/dircolors.ansi-light ~/.dircolors
