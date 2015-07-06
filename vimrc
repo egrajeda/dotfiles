@@ -15,6 +15,8 @@ Plugin 'hallison/vim-markdown'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/powerline'
 Plugin 'tyru/current-func-info.vim'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
 
 call vundle#end()
 filetype plugin indent on
@@ -62,8 +64,8 @@ set list
 " Es más conveniente para no tener que estar apretando Shift
 nm , :
 
-" El mapleader es ñ
-let mapleader = "ñ"
+" El mapleader es ;
+let mapleader = ";"
 
 hi phpSyntaxError ctermbg=1 ctermfg=255
 fun! CheckPHPSyntax()
@@ -79,14 +81,6 @@ fun! CheckPHPSyntax()
 endfunction
 au! BufWritePost *.php call CheckPHPSyntax()
 
-" Estos son algunos errores comunes que hago cuando programo
-iab This this
-iab tihs this
-
-" Carga el command correspondiente al template
-nm ñoc :exe "e! " . substitute(expand("%:r"), "templates", "commands", "") . ".php"<cr>
-nm ñot :exe "e! " . substitute(expand("%:r"), "commands", "templates", "") . ".tpl"<cr>
-
 hi NonText ctermfg=7
 
 hi ExtraWhitespace ctermbg=1
@@ -100,3 +94,6 @@ set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 " Habilitar la configuración por proyecto
 set exrc
 set secure
+
+nm <leader>nt :exe 'Note ' . strftime('%Y-%m-%d')<CR>
+nm <leader>nw :exe 'Note ' . strftime('%Y-W%U')<CR>
