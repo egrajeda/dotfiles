@@ -81,14 +81,6 @@ fun! CheckPHPSyntax()
 endfunction
 au! BufWritePost *.php call CheckPHPSyntax()
 
-" Estos son algunos errores comunes que hago cuando programo
-iab This this
-iab tihs this
-
-" Carga el command correspondiente al template
-nm ñoc :exe "e! " . substitute(expand("%:r"), "templates", "commands", "") . ".php"<cr>
-nm ñot :exe "e! " . substitute(expand("%:r"), "commands", "templates", "") . ".tpl"<cr>
-
 hi NonText ctermfg=235
 
 hi ExtraWhitespace ctermbg=1
