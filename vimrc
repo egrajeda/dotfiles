@@ -96,4 +96,5 @@ set exrc
 set secure
 
 nm <leader>nt :exe 'Note ' . strftime('%Y-%m-%d')<CR>
+nm <leader>ny :exe 'Note ' . strftime('%Y-%m-%d', localtime() - 24 * 60 * 60)<CR>
 nm <leader>nw :exe 'Note ' . strftime('%Y-W%V')<CR>
