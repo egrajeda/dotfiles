@@ -18,3 +18,9 @@ vim +PluginInstall +qall
 if [ -n "$ARCHLINUX" ]; then
     localectl --no-convert set-x11-keymap us pc104 altgr-intl ctrl:nocaps
 fi
+
+if [ -n "$ARCHLINUX" ]; then
+    mkdir -p ~/.config/systemd
+    ln -s $DOTFILES/systemd ~/.config/systemd/user
+    systemctl --user enable unison
+fi
