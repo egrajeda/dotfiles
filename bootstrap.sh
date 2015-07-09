@@ -20,3 +20,9 @@ if [ -n "$ARCHLINUX" ]; then
 fi
 
 ln -s $DOTFILES/dircolors/dircolors.ansi-light ~/.dircolors
+
+if [ -n "$ARCHLINUX" ]; then
+    mkdir -p ~/.config/systemd
+    ln -s $DOTFILES/systemd ~/.config/systemd/user
+    systemctl --user enable unison
+fi
