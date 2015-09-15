@@ -26,3 +26,6 @@ if [ -n "$ARCHLINUX" ]; then
     ln -s $DOTFILES/systemd ~/.config/systemd/user
     systemctl --user enable unison
 fi
+
+ln -s $DOTFILES/bspwm ~/.config/bspwm
+ln -s $DOTFILES/sxhkd ~/.config/sxhkd
