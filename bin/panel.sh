@@ -7,12 +7,15 @@ FONT2="FontAwesome:size=10"
 
 PADDING="   "
 
+ORANGE="#FFCB4B16"
 RED="#FFDC322F"
 
 ICON_VOLUME_UP="\uf028"
 ICON_VOLUME_DOWN="\uf027"
 ICON_VOLUME_OFF="\uf026"
 ICON_WIFI="\uf1eb"
+ICON_WEB="\uf0c2"
+ICON_CODE="\uf121"
 
 DEFAULT_REFRESH_RATE=1
 
@@ -52,6 +55,20 @@ NetworkPing() {
     printf "%-6s" $ping
 }
 
+Desktops() {
+    focused=$(bspc query -d focused -D)
+    if [ $focused = "I" ]; then
+        output="${output}%{B$ORANGE}  $ICON_WEB  %{B-}"
+    else
+        output="${output}  $ICON_WEB  "
+    fi
+    if [ $focused = "II" ]; then
+        output="${output}%{B$ORANGE}  $ICON_CODE  %{B-}"
+    else
+        output="${output}  $ICON_CODE  "
+    fi
+    echo $output
+}
 
 ticks=0
 while true; do
@@ -59,12 +76,13 @@ while true; do
         clock=$(Clock)
         volume=$(Volume)
         network=$(Network)
+        desktops=$(Desktops)
     fi
     if [ $(( $ticks % $NETWORK_PING_REFRESH_RATE )) -eq 0 ]; then
         network_ping=$(NetworkPing)
     fi
 
-    echo "%{r}${network}${network_ping}$PADDING${volume}$PADDING${clock}  "
+    echo "$desktops%{r}${network}${network_ping}$PADDING${volume}$PADDING${clock}  "
 
     sleep 1;
 
