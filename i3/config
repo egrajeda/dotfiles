@@ -1,8 +1,78 @@
+# -----------------------------------------------------------------------------
+# Aplicaciones del inicio
+# -----------------------------------------------------------------------------
+
+exec --no-startup-id feh --bg-scale ~/images/wallpaper.jpg
+exec --no-startup-id compton
+
+# -----------------------------------------------------------------------------
+# i3bar
+# -----------------------------------------------------------------------------
+
+bar {
+  position top
+  font     pango:Consolas 10
+
+  i3bar_command  i3bar -t
+  status_command i3status
+  tray_output    primary
+
+  separator_symbol        " "
+  strip_workspace_numbers yes
+
+  colors {
+    background #00000033
+  }
+}
+
+# -----------------------------------------------------------------------------
+# Apariencia
+# -----------------------------------------------------------------------------
+
+for_window [class="^.*"] border pixel 1
+gaps inner 15
+gaps outer -6
+
+new_window none
+font pango:Ubuntu Bold 10
+
+# -----------------------------------------------------------------------------
+# Reglas
+# -----------------------------------------------------------------------------
+# En el workspace #1, la terminal siempre se abre a la izquierda y con ~80
+# columnas de ancho.
+for_window [class="Gnome-terminal" workspace="1"] move left; resize grow width 0 px or 11 ppt
+
+#for_window [class="Firefox"] floating enable
+#for_window [class="chromium"] floating enable
+
+# -----------------------------------------------------------------------------
+# Bindings
+# -----------------------------------------------------------------------------
+
 set $mod Control
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:monospace 8
+# bindsym $mod+comma exec rofi -show run
+
+bindsym XF86AudioMute        exec --no-startup-id amixer set Master toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+
+bindsym XF86AudioMicMute     exec --no-startup-id amixer set Capture toggle
+
+bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20
+
+bindsym Control+Mod1+l exec --no-startup-id ~/local/src/i3lock/i3lock -i ~/images/wallpaper02.png -c '#000000' -o '#191d0f' -w '#572020' -l '#ffffff' -e
+
+# -----------------------------------------------------------------------------
+# Comportamiento
+# -----------------------------------------------------------------------------
+
+focus_follows_mouse no
+
+# -----------------------------------------------------------------------------
+# Por categorizar
+# -----------------------------------------------------------------------------
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -13,8 +83,10 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-bindsym $mod+comma exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+bindsym $mod+comma exec --no-startup-id i3-dmenu-desktop
 
 # move focused window
 bindsym $mod+Shift+j move left
@@ -29,44 +101,34 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+Shift+s layout stacking
-bindsym $mod+Shift+w layout tabbed
-bindsym $mod+Shift+e layout toggle split
+#bindsym $mod+s layout stacking
+#bindsym $mod+w layout tabbed
+#bindsym $mod+e layout toggle split
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace 1:www
+bindsym $mod+2 workspace 2:term
+bindsym $mod+3 workspace 3:code
+bindsym $mod+4 workspace 4:music
+bindsym $mod+5 workspace 5:chat
+bindsym $mod+6 workspace 6:misc
+bindsym $mod+7 workspace 7:meld
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
-
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
-bindsym XF86AudioMute exec amixer -q set Master toggle
+bindsym $mod+Shift+1 move container to workspace 1:www
+bindsym $mod+Shift+2 move container to workspace 2:term
+bindsym $mod+Shift+3 move container to workspace 3:code
+bindsym $mod+Shift+4 move container to workspace 4:music
+bindsym $mod+Shift+5 move container to workspace 5:chat
+bindsym $mod+Shift+6 move container to workspace 6:misc
+bindsym $mod+Shift+7 move container to workspace 7:meld
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+x exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -91,39 +153,3 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
-# -----------------------------------------------------------------------------
-# Aplicaciones del inicio
-# -----------------------------------------------------------------------------
-
-exec --no-startup-id feh --bg-scale ~/images/wallpaper.jpg
-exec --no-startup-id compton
-
-# -----------------------------------------------------------------------------
-# i3bar
-# -----------------------------------------------------------------------------
-
-bar {
-  position top
-  font pango:Source Code Pro Semibold 9
-  separator_symbol " "
-
-  i3bar_command i3bar -t
-  status_command i3status
-
-  colors {
-    background #00000033
-  }
-}
-
-for_window [class="^.*"] border pixel 1
-gaps inner 15
-gaps outer -6
-
-# -----------------------------------------------------------------------------
-# Reglas
-# -----------------------------------------------------------------------------
-
-# En el workspace #1, la terminal siempre se abre a la izquierda y con ~80
-# columnas de ancho.
-for_window [class="Gnome-terminal" workspace="1"] move left; resize grow width 0 px or 11 ppt

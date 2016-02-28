@@ -20,6 +20,7 @@ failure() {
 symlink() {
     relative_path=$(echo $2 | sed -e "s|$HOME|~|g")
     if [ ! -f "$2" ] && [ ! -d "$2" ]; then
+        mkdir -p "$(dirname $2)"
         ln -sT $1 $2
         success "$relative_path"
     elif [ "$1" -ef "$2" ]; then
@@ -54,6 +55,8 @@ vim +PluginInstall +qall
 
 echo -e "\n:: Setting up the system..."
 
+# localectl --no-convert set-x11-keymap latam pc104 deadtilde ctrl:nocaps \
+#     && success "Keyboard" || failure "Keyboard"
 localectl --no-convert set-x11-keymap us pc104 altgr-intl ctrl:nocaps \
     && success "Keyboard" || failure "Keyboard"
 
