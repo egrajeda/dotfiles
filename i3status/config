@@ -1,6 +1,7 @@
 order += "wireless wlp0s20u1"
 order += "wireless wlp5s0"
 order += "volume master"
+order += "battery 0"
 order += "tztime local"
 
 wireless wlp0s20u1 {
@@ -15,7 +16,14 @@ wireless wlp5s0 {
 
 volume master {
   format = "%volume"
-  format_muted = "%volume"
+  format_muted = "---"
+}
+
+battery 0 {
+  format = "%status %percentage"
+  status_chr = " "
+  status_bat = " "
+  status_full = " "
 }
 
 tztime local {
