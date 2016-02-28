@@ -1,31 +1,61 @@
-#!/bin/sh
+#!/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
+RESET='\e[0m\033[0m'
+
+UNDERLINE='\e[4m'
 
 DOTFILES=$(cd $(dirname $0); pwd -P)
 
-if [ -f "/etc/arch-release" ]; then
-    ARCHLINUX=1
-fi
+success() {
+    echo -e " $GREEN✓$RESET $1"
+}
 
-ln -s $DOTFILES/tmux.conf ~/.tmux.conf
-ln -s $DOTFILES/gitconfig ~/.gitconfig
+failure() {
+    echo -e " $RED✗$RESET $1"
+}
 
-git submodule update --init --recursive
-ln -s $DOTFILES/vimrc ~/.vimrc
-ln -sT $DOTFILES/vim ~/.vim
+symlink() {
+    relative_path=$(echo $2 | sed -e "s|$HOME|~|g")
+    if [ ! -f "$2" ] && [ ! -d "$2" ]; then
+        ln -sT $1 $2
+        success "$relative_path"
+    elif [ "$1" -ef "$2" ]; then
+        success "$relative_path"
+    else
+        failure "$relative_path - The file already exists and is either a normal file, or it points to a different path."
+    fi
+}
+
+echo -e ":: Downloading the submodules..."
+
+git submodule update --init --recursive \
+    && success "Done" || failure "Error"
+
+echo -e "\n:: Creating symlinks..."
+
+[ -d "$HOME/.config/systemd" ] || mkdir -p ~/.config/systemd
+
+symlink $DOTFILES/tmux.conf ~/.tmux.conf
+symlink $DOTFILES/gitconfig ~/.gitconfig
+symlink $DOTFILES/vimrc ~/.vimrc
+symlink $DOTFILES/vim ~/.vim
+symlink $DOTFILES/dircolors/dircolors.ansi-light ~/.dircolors
+symlink $DOTFILES/systemd ~/.config/systemd/user
+symlink $DOTFILES/i3/config ~/.config/i3/config
+symlink $DOTFILES/i3status/config ~/.config/i3status/config
+
+echo -e "\n:: Setting up vim..."
+
 vim +PluginInstall +qall
-(cd $DOTFILES/vim/bundle/command-t/ruby/command-t && ruby extconf.rb && make)
+(cd $DOTFILES/vim/bundle/command-t/ruby/command-t && ruby extconf.rb && make) | pr -T --indent=1
 
-if [ -n "$ARCHLINUX" ]; then
-    localectl --no-convert set-x11-keymap us pc104 altgr-intl ctrl:nocaps
-fi
+echo -e "\n:: Setting up the system..."
 
-ln -s $DOTFILES/dircolors/dircolors.ansi-light ~/.dircolors
+localectl --no-convert set-x11-keymap us pc104 altgr-intl ctrl:nocaps \
+    && success "Keyboard" || failure "Keyboard"
 
-if [ -n "$ARCHLINUX" ]; then
-    mkdir -p ~/.config/systemd
-    ln -s $DOTFILES/systemd ~/.config/systemd/user
-    systemctl --user enable unison
-fi
-
-ln -s $DOTFILES/bspwm ~/.config/bspwm
-ln -s $DOTFILES/sxhkd ~/.config/sxhkd
+systemctl --user enable unison \
+    && success "Unison" || failure "Unison"

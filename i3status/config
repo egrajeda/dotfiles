@@ -1,0 +1,23 @@
+order += "wireless wlp0s20u1"
+order += "wireless wlp5s0"
+order += "volume master"
+order += "tztime local"
+
+wireless wlp0s20u1 {
+    format_up = " %quality"
+    format_down = ""
+}
+
+wireless wlp5s0 {
+    format_up = " %quality %essid %ip"
+    format_down = ""
+}
+
+volume master {
+  format = "%volume"
+  format_muted = "%volume"
+}
+
+tztime local {
+  format = "%A %b %d %H:%M "
+}
