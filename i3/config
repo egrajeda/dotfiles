@@ -52,8 +52,6 @@ for_window [class="Gnome-terminal" workspace="1"] move left; resize grow width 0
 
 set $mod Control
 
-# bindsym $mod+comma exec rofi -show run
-
 bindsym XF86AudioMute        exec --no-startup-id amixer set Master toggle
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+
@@ -61,6 +59,8 @@ bindsym XF86AudioMicMute     exec --no-startup-id amixer set Capture toggle
 
 bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 20
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20
+
+bindsym XF86Display exec --no-startup-id ~/src/dotfiles/bin/toggle_external_display.sh
 
 bindsym Control+Mod1+l exec --no-startup-id ~/local/src/i3lock/i3lock -i ~/images/wallpaper02.png -c '#000000' -o '#191d0f' -w '#572020' -l '#ffffff' -e
 
