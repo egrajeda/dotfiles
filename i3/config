@@ -54,7 +54,7 @@ set $mod Control
 
 bindsym $mod+comma exec --no-startup-id i3-dmenu-desktop
 
-bindsym $mod+Shift+o move workspace to output right
+bindsym $mod+Shift+o move workspace to output up
 
 bindsym XF86AudioMute        exec --no-startup-id amixer set Master toggle
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-

@@ -20,7 +20,7 @@ resolution=$(xrandr | grep " connected" | grep -v LVDS1 | cut -d " " -f3)
 
 # La salida NO está activada
 if [[ $resolution == \(* ]]; then
-    xrandr --output $display --auto --left-of LVDS1
+    xrandr --output $display --auto --above LVDS1
 
 # La salida SI está activada
 else
