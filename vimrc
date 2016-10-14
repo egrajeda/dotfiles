@@ -17,6 +17,7 @@ Plugin 'Lokaltog/powerline'
 Plugin 'tyru/current-func-info.vim'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-notes'
+Plugin 'hashivim/vim-terraform'
 
 call vundle#end()
 filetype plugin indent on
