@@ -45,8 +45,7 @@ symlink $DOTFILES/vimrc ~/.vimrc
 symlink $DOTFILES/vim ~/.vim
 symlink $DOTFILES/dircolors/dircolors.ansi-light ~/.dircolors
 symlink $DOTFILES/systemd ~/.config/systemd/user
-symlink $DOTFILES/i3/config ~/.config/i3/config
-symlink $DOTFILES/i3status/config ~/.config/i3status/config
+symlink $DOTFILES/ideavimrc ~/.ideavimrc
 
 echo -e "\n:: Setting up vim..."
 
