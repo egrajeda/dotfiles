@@ -1,6 +1,0 @@
-set wildignore+=vendor/**,app/cache/**,app/logs/**,web/bundles/**
-
-" Mappings para ejecutar las pruebas de todo el archivo o únicamente aquella
-" sobre la cual está el cursor
-nm ñra :!phpunit -c app %<cr>
-nm ñro :exe '!phpunit -c app --filter ' . cfi#get_func_name() . '$ %'<cr>

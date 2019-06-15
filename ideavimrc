@@ -1,5 +1,0 @@
-nm , :
-
-let mapleader = "ñ"
-
-nm <leader>rt :action RunClass<cr>
