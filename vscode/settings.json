@@ -1,0 +1,29 @@
+{
+    "editor.minimap.enabled": false,
+    "workbench.iconTheme": "material-icon-theme",
+    "window.menuBarVisibility": "toggle",
+    "workbench.activityBar.visible": false,
+    "window.zoomLevel": 0,
+    "workbench.editor.showTabs": false,
+    "editor.lineNumbers": "off",
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.startupEditor": "none",
+    "editor.tabSize": 2,
+    "editor.renderWhitespace": "none",
+    "breadcrumbs.enabled": true,
+    "[csharp]": {
+        "editor.defaultFormatter": "Leopotam.csharpfixformat"
+    },
+    "csharpfixformat.style.braces.onSameLine": false,
+    "csharpfixformat.style.spaces.beforeParenthesis": false,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "gitlens.currentLine.enabled": false,
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.codeLens.enabled": false,
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
