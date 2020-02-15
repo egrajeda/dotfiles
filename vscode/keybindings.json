@@ -11,5 +11,13 @@
   {
     "key": "ctrl+t",
     "command": "-workbench.action.showAllSymbols"
+  },
+  {
+    "key": "ctrl+'",
+    "command": "workbench.action.terminal.toggleTerminal"
+  },
+  {
+    "key": "ctrl+`",
+    "command": "-workbench.action.terminal.toggleTerminal"
   }
 ]
