@@ -182,6 +182,7 @@
 
   ;; The asterisk is due to: https://github.com/bbatsov/projectile/issues/1250
   (add-to-list 'projectile-globally-ignored-directories "*node_modules")
+  (add-to-list 'projectile-globally-ignored-directories "*bower_components")
 
   ;; Need an easier way to find file using Projectile, if available,
   ;; or using the standard file-file otherwise.
@@ -271,7 +272,10 @@
   :config
   (global-flycheck-mode t)
   ;; I use flycheck for tide, and tide recommends these settings
-  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  ;; To avoid https://github.com/flycheck/flycheck/issues/1472 on projects that
+  ;; still use tslint
+  (setq-default flycheck-disabled-checkers '(typescript-tslint)))
 
 ;; company ---------------------------------------------------------------------
 (use-package company
@@ -308,6 +312,7 @@
   ("M-RET" . tide-fix)
   ("S-<f6>" . tide-rename-symbol)
   (:map evil-normal-state-map
+        ("C-o" . tide-jump-back)
         (",cr" . tide-rename-symbol)))
 
 ;; add-node-modules-path -------------------------------------------------------
@@ -657,6 +662,8 @@
                     :height (if (eq system-type 'windows-nt) 110 120)
                     :weight 'normal
                     :width 'normal)
+
+(setq garbage-collection-messages t)
 
 ;; Scratchpad
 
