@@ -58,6 +58,10 @@
   ;; (fringe ((t (:background "#ffffff"))))
   )
 
+;; color-theme-sanityinc-tomorrow ----------------------------------------------
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t)
+
 ;; auto-package-update.el ------------------------------------------------------
 (use-package auto-package-update
   :ensure t)
@@ -307,13 +311,7 @@
                   (tide-hl-identifier-mode))))
   :config
   (setq tide-completion-ignore-case t
-        tide-hl-identifier-idle-time 0.0)
-  :bind
-  ("M-RET" . tide-fix)
-  ("S-<f6>" . tide-rename-symbol)
-  (:map evil-normal-state-map
-        ("C-o" . tide-jump-back)
-        (",cr" . tide-rename-symbol)))
+        tide-hl-identifier-idle-time 0.0))
 
 ;; add-node-modules-path -------------------------------------------------------
 ;; This is needed for "prettier" to work, I don't have it globally installed.
@@ -581,6 +579,28 @@
   </div>
 </div>"
            ))))
+
+;; general ---------------------------------------------------------------------
+(use-package general
+  :ensure t
+  :config
+
+  (general-define-key
+   :states '(normal insert)
+   "C-t" 'find-file-with-projectile-or-fallback
+   "C-e" 'switch-to-buffer-with-projectile-or-fallback)
+
+  (general-define-key
+   :states '(normal insert)
+   :keymaps 'tide-mode-map
+   "C-t"   'find-file-with-projectile-or-fallback
+   "M-RET" 'tide-fix
+   "C-o"   'tide-jump-back)
+
+  (general-define-key
+   :states 'normal
+   :keymaps 'tide-mode-map
+   ",cr" 'tide-rename-symbol))
 
 ;; Global org-agenda/org-capture -----------------------------------------------
 (defun egb-initialize-global-org-agenda ()
