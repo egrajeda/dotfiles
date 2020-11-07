@@ -35,32 +35,41 @@
               (file-name-nondirectory path)))))
 (define-key minibuffer-local-map (kbd "M-.") 'insert-file-name-into-minibuffer)
 
+(defun typescript-fix-or-refactor-at-point ()
+  "Apply code fix for the error at point, or refactor the code."
+  (interactive)
+  (if (flycheck-overlay-errors-at (point))
+      (tide-fix)
+    (tide-refactor)))
+
 ;; leuven-theme ----------------------------------------------------------------
-(use-package leuven-theme
-  :ensure t
-  :config
-  (setq leuven-scale-outline-headlines nil
-        leuven-scale-org-agenda-structure nil)
-  (load-theme 'leuven t)
-  :custom-face
-  (cursor ((t (:background "#d0372d"))))
-  (org-document-title ((t (:foreground "#c42c1f" :weight bold :height 1.0))))
-  (org-document-info-keyword ((t (:foreground "#aaaaaa" :background nil))))
-  (org-meta-line ((t (:foreground "#aaaaaa"))))
-  (org-level-1 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
-  (org-level-2 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
-  (org-level-3 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
-  (org-level-4 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
-  (org-level-5 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
-  (org-block-end-line ((t (:overline nil))))
-  (org-scheduled-today ((t (:background nil))))
-  ;; TODO: Is this still needed?
-  ;; (fringe ((t (:background "#ffffff"))))
-  )
+;; (use-package leuven-theme
+;;   :ensure t
+;;   :config
+;;   (setq leuven-scale-outline-headlines nil
+;;         leuven-scale-org-agenda-structure nil)
+;;   (load-theme 'leuven t)
+;;   :custom-face
+;;   (cursor ((t (:background "#d0372d"))))
+;;   (org-document-title ((t (:foreground "#c42c1f" :weight bold :height 1.0))))
+;;   (org-document-info-keyword ((t (:foreground "#aaaaaa" :background nil))))
+;;   (org-meta-line ((t (:foreground "#aaaaaa"))))
+;;   (org-level-1 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
+;;   (org-level-2 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
+;;   (org-level-3 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
+;;   (org-level-4 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
+;;   (org-level-5 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
+;;   (org-block-end-line ((t (:overline nil))))
+;;   (org-scheduled-today ((t (:background nil))))
+;;   ;; TODO: Is this still needed?
+;;   ;; (fringe ((t (:background "#ffffff"))))
+;;   )
 
 ;; color-theme-sanityinc-tomorrow ----------------------------------------------
 (use-package color-theme-sanityinc-tomorrow
-  :ensure t)
+  :ensure t
+  :config
+  (load-theme 'sanityinc-tomorrow-night t))
 
 ;; auto-package-update.el ------------------------------------------------------
 (use-package auto-package-update
@@ -273,6 +282,7 @@
 ;; flycheck --------------------------------------------------------------------
 (use-package flycheck
   :ensure t
+  :diminish flycheck-mode
   :config
   (global-flycheck-mode t)
   ;; I use flycheck for tide, and tide recommends these settings
@@ -506,8 +516,6 @@
 
 ;; org-capture -----------------------------------------------------------------
 (use-package org-capture
-  :bind
-  ("C-c c" . org-capture)
   :config
   (setq org-capture-templates
         '(
@@ -515,10 +523,16 @@
           ;; expire them automatically after a certain time has passed.
           ("t" "Task" entry
            (file+datetree "~/Dropbox/Notes/Private/tasks.org")
-           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:" :tree-type week)
+           "* TODO %?
+SCHEDULED: %t
+:PROPERTIES:
+:CREATED: %U
+:END:
+" :tree-type week)
           ("n" "Note" entry
            (file+datetree "~/Dropbox/Notes/Private/inbox.org")
-           "* %U\n%i%?" :tree-type week))))
+           "* %U
+%i%?" :tree-type week))))
 
 ;; org-expiry ------------------------------------------------------------------
 ;; Disabled for now. I'm manually adding the :CREATED: properties with the
@@ -531,6 +545,14 @@
 ;;  :load-path "org-mode/contrib/lisp"
 ;;  :config
 ;;  (org-expiry-deinsinuate))
+
+;; undo-tree -------------------------------------------------------------------
+(use-package undo-tree
+  :diminish undo-tree-mode)
+
+;; eldoc-mode ------------------------------------------------------------------
+(use-package eldoc
+  :diminish eldoc-mode)
 
 ;; neotree ---------------------------------------------------------------------
 (use-package neotree
@@ -587,14 +609,15 @@
 
   (general-define-key
    :states '(normal insert)
-   "C-t" 'find-file-with-projectile-or-fallback
-   "C-e" 'switch-to-buffer-with-projectile-or-fallback)
+   "C-t"   'find-file-with-projectile-or-fallback
+   "C-e"   'switch-to-buffer-with-projectile-or-fallback
+   "C-c c" 'org-capture)
 
   (general-define-key
    :states '(normal insert)
    :keymaps 'tide-mode-map
    "C-t"   'find-file-with-projectile-or-fallback
-   "M-RET" 'tide-fix
+   "M-RET" 'typescript-fix-or-refactor-at-point
    "C-o"   'tide-jump-back)
 
   (general-define-key
@@ -732,22 +755,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("819ab08867ef1adcf10b594c2870c0074caf6a96d0b0d40124b730ff436a7496" "890a1a44aff08a726439b03c69ff210fe929f0eff846ccb85f78ee0e27c7b2ea" default))
+   '("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "819ab08867ef1adcf10b594c2870c0074caf6a96d0b0d40124b730ff436a7496" "890a1a44aff08a726439b03c69ff210fe929f0eff846ccb85f78ee0e27c7b2ea" default))
  '(package-selected-packages
-   '(ivy-rich ox-rss fira-code-mode omnisharp neotree evil-commentary ox lsp-ui lsp-ivy lsp-mode auto-package-update evil evil-mode go-mode tide use-package)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(cursor ((t (:background "#d0372d"))))
- '(org-block-end-line ((t (:overline nil))))
- '(org-document-info-keyword ((t (:foreground "#aaaaaa" :background nil))))
- '(org-document-title ((t (:foreground "#c42c1f" :weight bold :height 1.0))))
- '(org-level-1 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
- '(org-level-2 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
- '(org-level-3 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
- '(org-level-4 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
- '(org-level-5 ((t (:foreground "#222222" :background nil :overline nil :weight bold))))
- '(org-meta-line ((t (:foreground "#aaaaaa"))))
- '(org-scheduled-today ((t (:background nil)))))
+   '(color-theme-sanityinc-tomorrow general ivy-rich ox-rss fira-code-mode omnisharp neotree evil-commentary ox lsp-ui lsp-ivy lsp-mode auto-package-update evil evil-mode go-mode tide use-package))
+ )
